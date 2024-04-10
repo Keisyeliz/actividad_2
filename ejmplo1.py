@@ -13,44 +13,54 @@ el sistema debe realizar:
 
 
 import os
+n_Despachos = 0
+diccionario_registo = {}
 sw = True
-
-diccionario_registros = {}
-n_despacho = 0
-def fnt_num_despacho():
-    global n_despacho
-    n_despacho += 1
-    return n_despacho
-
-def fnt_registrar(placa, descripcionv, nombre, contacto,ruta,descripcionc):
-    if placa == '' or descripcionv == '' or nombre == '' or contacto == '' or ruta == '' or descripcionc == '':
-        enter = input('\nDebe ingresar todos los datos <ENTER>')
-    else:
-        enter = input(f'\nRegistro del vehiculo {placa} realizado con éxito')
-         
-def fnt_selector(op):
-    if op == '1':
-        placa = input('Ingrese el número de la placa: ')
-        descripcionv = input('Ingrese la descripción del vehiculo: ')
-        nombre = input('Ingrese el nombre del conductor: ')
-        contacto = input('Ingrese el número de contacto: ')
-        ruta = input('Ingrese la ruta a recorrer: ')
-        descripcionc = input('Ingrese la descripción de la carga: ')
-    fnt_registrar(placa, descripcionv, nombre, contacto,ruta,descripcionc)
+def fnt_agregar(diccionario, placa, descripcion_vehiculo, nombre, contacto, ruta, descripcion_carga  ):
+    global n_Despachos
+    if placa == '' or descripcion_vehiculo == '' or nombre == '' or contacto == '' or ruta == '' or descripcion_carga == '':
+        enter = input('debe de diligenciar toda la informacion solicitadad <ENTER>')
+    else :
+        diccionario[placa] = {'Descipción del vehiculo': descripcion_vehiculo, 'nombre': nombre, 'contacto': contacto, 'ruta': ruta, 'descripcion de la carga': descripcion_carga}
+        n_Despachos += 1
+    enter = input(f'\nEl vehiculo {placa} ha sido registrado con exito <ENTER>')
 
 
-while sw == True:
+def fnt_consultar():
+    global diccionario_registo
+    os.system('cls')
+    print('\nCantidad de registros: ',n_Despachos,'\n')
+    for key, valor in diccionario_registo.items():
+        print(f'Numero de placa: {key}')
+        print(f'{valor}')
+    enter = input('\n\nPresione ENTER para continuar...')
+
+
+def fnt_selector(opcion):
+    global sw
+    global diccionario_registo
+
+    if opcion == '1':
+        os.system('cls')
+        nombre = input('Nombre del conductor: ')
+        placa = input('número de placa del vehiculo: ')
+        contacto = input('Número de contacto: ')
+        descripcion_vehiculo = input('Descrión del vehiculo: ')
+        descripcion_carga = input('Descripción de carga: ')
+        ruta = input('Ruta a recorrer: ')
+        fnt_agregar (diccionario_registo, placa, descripcion_vehiculo, nombre, contacto, ruta, descripcion_carga)
+
+    elif opcion == '2':
+        fnt_consultar()
+
+    elif opcion == '3':
+        sw = False
+
+
+while sw == True: 
     os.system('cls')
     opcion = input('1. Registrar\n2. Mostrar\n3. Salir\n- >  ')
-    if opcion == "1":
-        fnt_selector(opcion)
-    elif opcion == '2':
-        print('\nCantidad de registros: ',len(diccionario_registros),'\n') 
-        enter = input('\nPresione <ENTER> para continuar')  
-   
-
-
-
+    fnt_selector(opcion)
 
 
 
